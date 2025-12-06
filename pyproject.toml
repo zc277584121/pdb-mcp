@@ -1,0 +1,17 @@
+[project]
+name = "pdb-mcp"
+version = "0.0.1"
+description = "PDB MCP"
+readme = "README.md"
+authors = [
+    { name = "ChengZi", email = "277584121@qq.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.17.0",
+    "pytest>=7.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
