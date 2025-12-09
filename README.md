@@ -2,6 +2,8 @@
 
 A Model Context Protocol (MCP) server for Python debugging using pdb. This allows you to debug Python scripts through MCP tools.
 
+[中文版 README](README_zh.md) | [English README](README.md)
+
 ## Features
 
 - **Start Debug Session**: Launch a Python script in debug mode using pdb
