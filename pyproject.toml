@@ -1,7 +1,7 @@
 [project]
 name = "pdb-mcp"
 version = "0.0.1"
-description = "PDB MCP"
+description = "A Model Context Protocol (MCP) server for Python debugging using pdb"
 readme = "README.md"
 authors = [
     { name = "ChengZi", email = "277584121@qq.com" }
@@ -11,6 +11,9 @@ dependencies = [
     "mcp>=1.17.0",
     "pytest>=7.0.0",
 ]
+
+[project.scripts]
+pdb-mcp = "pdb_mcp:main"
 
 [build-system]
 requires = ["hatchling"]

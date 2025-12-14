@@ -1,5 +1,8 @@
 # PDB MCP Server
 
+[![PyPI version](https://badge.fury.io/py/pdb-mcp.svg)](https://badge.fury.io/py/pdb-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A Model Context Protocol (MCP) server for Python debugging using pdb. This allows you to debug Python scripts through MCP tools.
 
 ## Features
@@ -11,6 +14,22 @@ A Model Context Protocol (MCP) server for Python debugging using pdb. This allow
 - **Modular Architecture**: Clean separation of concerns with session and server modules
 
 ## Installation
+
+### Install from PyPI
+
+```bash
+pip install pdb-mcp
+```
+
+### Install with uv (Recommended) ⚡️
+
+[`uvx`](https://docs.astral.sh/uv/concepts/tools/) will automatically install the package and run the command.
+
+```bash
+uvx pdb-mcp
+```
+
+### Development Installation
 
 ```bash
 pip install -e .
@@ -138,6 +157,21 @@ The test will:
 ## Configuration
 
 To use with Claude Desktop or other MCP clients, add to your configuration file (e.g., `claude_desktop_config.json`):
+
+### Using uvx (Recommended)
+
+```json
+{
+  "mcpServers": {
+    "pdb-debugger": {
+      "command": "uvx",
+      "args": ["--from", "pdb-mcp", "pdb-mcp"]
+    }
+  }
+}
+```
+
+### Using Local Development Version
 
 ```json
 {
