@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pdb-debugger": {
+      "command": "uvx",
+      "args": ["--from", "pdb-mcp", "pdb-mcp"]
+    }
+  }
+}

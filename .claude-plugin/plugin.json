@@ -1,0 +1,12 @@
+{
+  "name": "pdb-mcp",
+  "version": "0.0.2",
+  "description": "Python debugging best practices and MCP integration for pdb and pytest debugging",
+  "author": {
+    "name": "ChengZi",
+    "email": "277584121@qq.com"
+  },
+  "repository": "https://github.com/zhangchen/pdb-mcp",
+  "license": "MIT",
+  "keywords": ["python", "debugging", "pdb", "pytest", "mcp"]
+}

@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/pdb-mcp.svg)](https://badge.fury.io/py/pdb-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Model Context Protocol (MCP) server for Python debugging using pdb. This allows you to debug Python scripts through MCP tools.
+A Model Context Protocol (MCP) server for Python debugging using pdb, bundled as a **Claude Code Plugin** with debugging best practices.
 
 ## Features
 
@@ -12,6 +12,7 @@ A Model Context Protocol (MCP) server for Python debugging using pdb. This allow
 - **Execute PDB Commands**: Send commands to control the debugging session
 - **Auto-detect Python Interpreter**: Automatically uses virtual environment Python
 - **Modular Architecture**: Clean separation of concerns with session and server modules
+- **Claude Code Plugin**: Includes skills that teach Claude structured debugging workflows and best practices
 
 ## Installation
 
@@ -270,6 +271,58 @@ The server uses an intelligent output waiting mechanism:
 - `execute_pdb_command`: 5.0 seconds (most commands are quick)
 
 **Example:** A script that runs for 10 seconds but prints every 0.5 seconds will work fine with `timeout=3.0`, because the idle time never exceeds 3 seconds.
+
+## Claude Code Plugin
+
+This project is also a **Claude Code Plugin** that provides debugging best practices as skills. When installed as a plugin, Claude automatically receives structured debugging guidance.
+
+### Plugin Installation
+
+```bash
+# Install as a Claude Code plugin
+claude plugin add /path/to/pdb-mcp
+```
+
+Or test locally:
+```bash
+claude --plugin-dir /path/to/pdb-mcp
+```
+
+### Included Skills
+
+#### PDB Debugging Best Practices
+Automatically activates when debugging Python scripts. Guides Claude to:
+- Analyze code and plan breakpoints **before** starting a debug session
+- Set breakpoints at strategic locations based on the problem type
+- Follow systematic investigation patterns at each breakpoint
+- Use efficient pdb commands for different debugging scenarios
+
+#### Pytest Debugging Best Practices
+Automatically activates when debugging test failures. Guides Claude to:
+- Choose the right debug mode (`--pdb` vs `--trace`) based on the failure type
+- Narrow down to the specific failing test before debugging
+- Navigate the call stack to find root causes in application code
+- Handle common pytest patterns (fixtures, parameterized tests, mocks)
+
+### Plugin Structure
+
+```
+pdb-mcp/
+├── .claude-plugin/
+│   └── plugin.json              # Plugin manifest
+├── .mcp.json                    # MCP server configuration
+├── skills/
+│   ├── pdb-debugging/
+│   │   ├── SKILL.md             # Core debugging best practices
+│   │   └── references/
+│   │       ├── debugging-workflows.md    # Detailed workflows
+│   │       └── pdb-commands-cheatsheet.md # Command reference
+│   └── pytest-debugging/
+│       ├── SKILL.md             # Pytest debugging best practices
+│       └── references/
+│           └── pytest-debug-patterns.md  # Advanced patterns
+└── src/pdb_mcp/                 # MCP server source code
+```
 
 ## License
 

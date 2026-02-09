@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/pdb-mcp.svg)](https://badge.fury.io/py/pdb-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-一个基于模型上下文协议（MCP）的 Python 调试服务器，使用 pdb 进行调试。该工具允许您通过 MCP 工具调试 Python 脚本。
+一个基于模型上下文协议（MCP）的 Python 调试服务器，使用 pdb 进行调试，同时作为 **Claude Code 插件** 提供调试最佳实践指导。
 
 ## 功能特性
 
@@ -12,6 +12,7 @@
 - **执行 PDB 命令**：发送命令控制调试会话
 - **自动检测 Python 解释器**：自动使用虚拟环境中的 Python
 - **模块化架构**：会话模块和服务器模块职责清晰分离
+- **Claude Code 插件**：内置 Skills，教导 Claude 结构化的调试工作流和最佳实践
 
 ## 安装
 
@@ -270,6 +271,58 @@ cd /home/user/myproject && python -m pdb src/main.py
 - `execute_pdb_command`：5.0 秒（大多数命令很快）
 
 **示例：** 一个运行 10 秒但每 0.5 秒打印一次的脚本，使用 `timeout=3.0` 也能正常工作，因为空闲时间从未超过 3 秒。
+
+## Claude Code 插件
+
+本项目同时也是一个 **Claude Code 插件**，以 Skills 的形式提供调试最佳实践。安装为插件后，Claude 会自动获得结构化的调试指导。
+
+### 插件安装
+
+```bash
+# 安装为 Claude Code 插件
+claude plugin add /path/to/pdb-mcp
+```
+
+或本地测试：
+```bash
+claude --plugin-dir /path/to/pdb-mcp
+```
+
+### 包含的 Skills
+
+#### PDB 调试最佳实践
+调试 Python 脚本时自动激活。指导 Claude：
+- 在启动调试会话**之前**先分析代码并规划断点
+- 根据问题类型在关键位置设置断点
+- 在每个断点处遵循系统化的调查模式
+- 针对不同调试场景使用高效的 pdb 命令
+
+#### Pytest 调试最佳实践
+调试测试失败时自动激活。指导 Claude：
+- 根据失败类型选择正确的调试模式（`--pdb` 或 `--trace`）
+- 在调试前先缩小到具体的失败测试
+- 通过调用栈导航找到应用代码中的根本原因
+- 处理常见的 pytest 模式（fixtures、参数化测试、mock）
+
+### 插件结构
+
+```
+pdb-mcp/
+├── .claude-plugin/
+│   └── plugin.json              # 插件清单
+├── .mcp.json                    # MCP 服务器配置
+├── skills/
+│   ├── pdb-debugging/
+│   │   ├── SKILL.md             # 核心调试最佳实践
+│   │   └── references/
+│   │       ├── debugging-workflows.md    # 详细工作流
+│   │       └── pdb-commands-cheatsheet.md # 命令速查表
+│   └── pytest-debugging/
+│       ├── SKILL.md             # Pytest 调试最佳实践
+│       └── references/
+│           └── pytest-debug-patterns.md  # 高级调试模式
+└── src/pdb_mcp/                 # MCP 服务器源代码
+```
 
 ## 许可证
 
