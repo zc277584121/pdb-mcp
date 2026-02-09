@@ -121,6 +121,7 @@ class PdbSession:
         timeout: float = 10.0,
         working_directory: Optional[str] = None,
         env: Optional[Dict[str, str]] = None,
+        stop_at_start: bool = False,
     ) -> str:
         """Start a pytest debugging session with --pdb flag
 
@@ -130,6 +131,7 @@ class PdbSession:
             timeout: Time to wait without new output before returning (seconds). Default: 10.0
             working_directory: Directory to run the command in (defaults to current directory)
             env: Optional environment variables to set (will be added to existing environment)
+            stop_at_start: If True, add --trace flag to enter pdb before running any tests
         """
         if self.process is not None:
             return "Error: A debugging session is already running. Please quit the current session first."
@@ -140,6 +142,8 @@ class PdbSession:
 
             # Construct pytest command with --pdb
             cmd = f"{python_cmd} -m pytest --pdb"
+            if stop_at_start:
+                cmd += " --trace"
             if args:
                 cmd += f" {args}"
 

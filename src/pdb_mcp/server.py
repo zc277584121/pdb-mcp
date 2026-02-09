@@ -58,7 +58,7 @@ async def list_tools() -> list[Tool]:
         ),
         Tool(
             name="start_pytest_debug",
-            description="Start a pytest debugging session using 'pytest --pdb'. When test failures occur, pytest will automatically enter pdb for interactive debugging. Use args to control when and how failures trigger debugging (e.g., '-x' for first failure only).",
+            description="Start a pytest debugging session using 'pytest --pdb'. When test failures occur, pytest will automatically enter pdb for interactive debugging. Use args to control when and how failures trigger debugging (e.g., '-x' for first failure only). If stop_at_start is True, pytest will enter pdb before running any tests (using --trace flag).",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -116,6 +116,11 @@ Leave empty to run all tests in current directory.""",
                         "type": "object",
                         "description": "Optional environment variables to set for the debugging session (e.g., {'DEBUG': '1', 'API_KEY': 'test'}). These will be added to the existing environment.",
                         "default": {},
+                    },
+                    "stop_at_start": {
+                        "type": "boolean",
+                        "description": "If True, pytest will enter pdb before running any tests (adds --trace flag). This allows you to set breakpoints and debug before tests start. Default: False",
+                        "default": False,
                     },
                 },
                 "required": ["args", "python_path", "working_directory"],
@@ -211,8 +216,9 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
         timeout = arguments.get("timeout", 10.0)
         working_directory = arguments.get("working_directory") or None
         env = arguments.get("env") or None
+        stop_at_start = arguments.get("stop_at_start", False)
         result = pdb_session.start_pytest(
-            args, python_path, timeout, working_directory, env
+            args, python_path, timeout, working_directory, env, stop_at_start
         )
         return [TextContent(type="text", text=result)]
 
