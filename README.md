@@ -5,6 +5,8 @@
 
 A Model Context Protocol (MCP) server for Python debugging using pdb, bundled as a **Claude Code Plugin** with debugging best practices.
 
+[中文版 README](README_zh.md) | [English README](README.md)
+
 ## Features
 
 - **Start Debug Session**: Launch a Python script in debug mode using pdb
